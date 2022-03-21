@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "build-web": "expo build:web && cd web-build && vercel"
+    "build-web": "expo build:web && cd web-build && vercel",
+    "build-android": "expo build:android"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",
