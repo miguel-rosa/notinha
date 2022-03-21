@@ -42,7 +42,6 @@ type RootStackParamList = {
 const db = getFirestore(app);
 const queryGroups= query(collection(db, "room"));
 
-
 export const RoomContext = createContext({} as RoomContextType);
 
 export const RoomStorage:FC = ({children}) => {
