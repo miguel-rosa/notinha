@@ -28,7 +28,6 @@ jobs:
             run: yarn
 
           - name: Build Expo Web
-            working-directory: ./packages/app
             run: expo build:web
 
           - name: Vercel Deploy
