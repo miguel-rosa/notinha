@@ -1,20 +1,32 @@
-import React, {useState, useEffect} from "react";
-import { View, Text, TouchableOpacity, StyleSheet} from "react-native";
-import { app }  from "../../../data/firebase";
-import { getFirestore, collection, query, getDocs, addDoc} from "firebase/firestore";
+import React, {useEffect, useState, useCallback } from "react";
+import { View, StyleSheet} from "react-native";
 import Button from "../../components/Button";
+import CreateGroupModal from "../../components/CreateGroupModal";
 import JoinGroupModal from "../../components/JoinGroupModal";
-
-
-const db = getFirestore(app);
-const queryGroups= query(collection(db, "room"));
+import Logo from "../../components/Logo";
+import useGroup from "../../contexts/RoomContext";
 
 const Home:React.FC<{navigation: any}> = ({navigation}) => {
   const [showBottomModal, setShowBottomModal] = useState(false);
+  const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
+
+  const {alreadyHaveRoom, slug} = useGroup();
+
+  const checkRoom = useCallback(async() => {
+    const room = await alreadyHaveRoom();
+    console.log('room', room)
+    return !!room && navigation.navigate("Notes") 
+  }, [])
+
+  useEffect(() => {
+    checkRoom()
+  }, [checkRoom])
 
   return (
     <View style={styles.home}>
-      <Button>Criar grupo</Button>
+      <Logo/>
+      <Button onPress={() => setShowCreateRoomModal(true)}>Criar grupo</Button>
+      {showCreateRoomModal && <CreateGroupModal closeModal={() => setShowCreateRoomModal(false)}/>}
       <Button type='secondary' onPress={() => setShowBottomModal(true)}>Entrar em um grupo</Button>
       {showBottomModal && <JoinGroupModal closeModal={() => setShowBottomModal(false)}/>}
     </View>

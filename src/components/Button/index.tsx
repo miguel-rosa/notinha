@@ -1,17 +1,36 @@
 import React, { FC } from 'react';
-import { TouchableOpacity, Text, StyleSheet} from 'react-native';
+import { TouchableOpacity, StyleSheet, TextStyle} from 'react-native';
+import Text from '../Text';
 
 type ButtonProps = {
   onPress?():void;
-  type?: 'primary' | 'secondary'
+  type?: 'primary' | 'secondary',
+  size?: 'big' | 'medium' | 'small',
+  useSpacing?: boolean;
+  buttonStyle?: TextStyle;
 }
 
-const Button:FC<ButtonProps> = ({children, onPress = () => {}, type='primary'}) => {
+const Button:FC<ButtonProps> = ({
+  children,
+  onPress = () => {},
+  type='primary',
+  size='medium',
+  useSpacing=true,
+  buttonStyle
+}) => {
   return (
     <TouchableOpacity onPress={onPress} 
-      style={[styles[`${type}Background`], styles.button]}>
-      <Text 
-        style={[styles[`${type}Text`], styles.text]}
+      style={[
+        styles[`${type}Background`],
+        styles[`${size}Button`],
+        styles.button,
+        {
+          marginVertical: useSpacing ? 6 : 0
+        },
+        buttonStyle
+        ]}>
+      <Text
+        style={[styles[`${type}Text`], styles[`${size}Text`], styles.text]}
         >{children}</Text>
     </TouchableOpacity>
   )
@@ -20,18 +39,38 @@ const Button:FC<ButtonProps> = ({children, onPress = () => {}, type='primary'}) 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: 8,
-    padding: 16,
-    marginVertical: 6
+    borderRadius: 8
   },
   text: {
-    fontSize:16
+
   },
+
   primaryBackground: {
     backgroundColor:'#0d66ff'
   },
   secondaryBackground: {
     backgroundColor:'transparent'
+  },
+  bigButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 16
+  },
+  mediumButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 12
+  },
+  smallButton: {
+    paddingHorizontal: 12,
+    paddingVertical: 8
+  },
+  bigText: {
+    fontSize: 18
+  },
+  mediumText: {
+    fontSize: 16
+  },
+  smallText: {
+    fontSize: 14
   },
   primaryText: {
     color: '#fff'

@@ -1,28 +1,65 @@
 import React, { FC } from 'react';
-import {View, Text, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native'
 import Button from '../Button';
-import {Ionicons} from '@expo/vector-icons'
+import Text from "../Text";
+import IconClose from '../Icons/IconClose';
 
 type BottomModalProps = {
   title: string;
   buttonOptions?: {
     show?: boolean,
-    text?: string
+    text?: string,
+    position?: 'stretch' | 'center' | 'left' | 'right',
+    size?: 'big' | 'medium' | 'small',
+    type?: 'primary' | 'secondary'
   },
   closeModal(): void;
   height?: number;
+  onPress?():void;
 }
 
-const BottomModal:FC<BottomModalProps> = (
-  {title, children, buttonOptions={show: false}, closeModal, height}) => {
+const BottomModal:FC<BottomModalProps> = ({
+  title,
+  children,
+  buttonOptions={
+    position:'stretch',
+    show: false,
+    size: "medium"
+  },
+  closeModal,
+  height,
+  onPress
+}) => {
+  const buttonPosition = {
+    "stretch":"stretch",
+    "center":"center",
+    'left':"flex-start",
+    'right':"flex-end"
+  }
   return(
     <View style={[styles.bottomModal, {height:height}]} >
       <View style={styles.header}>
-        <Text style={styles.title}>{title}</Text>
-        <Ionicons size={24} style={styles.close} name='md-close' color='black' onPress={closeModal}/>
+        <Text  style={styles.title}>{title}</Text>
+        <IconClose onPress={closeModal} style={styles.close}/>
       </View>
-      {children}
-      {buttonOptions.show && <Button>{buttonOptions.text}</Button>}
+      <View style={styles.content}>
+        {children}
+        {buttonOptions.show && (
+          <View style={{
+            alignItems: buttonPosition[buttonOptions.position || "stretch"],
+            paddingTop: 18
+          }}>
+            <Button
+              useSpacing={false}
+              size={buttonOptions.size}
+              type={buttonOptions.type}
+              onPress={onPress}
+            >
+              {buttonOptions.text}
+            </Button>
+          </View>
+        )}
+      </View>
     </View>
   )
 }
@@ -56,7 +93,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 16,
     alignSelf: 'center',
-    top: 16
+    top: 13
+  },
+  content: {
+    padding: 20
   }
 })
 
