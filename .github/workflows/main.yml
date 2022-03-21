@@ -29,6 +29,6 @@ steps:
     with:
       vercel-token: ${{ secrets.VERCEL_TOKEN }}
       github-token: ${{ secrets.GITHUB_TOKEN }}
-      vercel-org-id: VERCEL_ORG_ID
-      vercel-project-id: VERCEL_PROJECT_ID
+      vercel-org-id: vQUYEiDSxr9LHexowynQJcWS
+      vercel-project-id: prj_iA4jK514KW6cIIerBJCB4MGFB2PC
       scope: TEAM
