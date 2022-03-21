@@ -63,7 +63,7 @@ export const RoomStorage:FC = ({children}) => {
     console.log('roomSnap', roomSnap)
     //Criar retorno para o usuário, avisando que o grupo já existe
     if(roomSnap.exists()) {
-      console.log("grupo já existe")
+      console.log("group already exists")
       return
     }
     try {
