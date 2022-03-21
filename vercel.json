@@ -1,7 +1,6 @@
 {
   "github": {
     "enabled": false,
-    "silent": true,
-    "token": "r1V3csVklzYwb6Xadap7UPmy"
+    "silent": true
   }
 }
