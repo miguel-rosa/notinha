@@ -20,14 +20,15 @@ type RoomContextType = {
   handleNoteCheck(id: string, checked:boolean): void
 }
 
-type Products = {
+type Note = {
   id: string;
-  produto: string;
+  text: string;
+  checked: boolean;
 }
 
 type Notes = {
   slug: string;
-  produtos: Products
+  notes: Note[]
 }
 
 type RoomData = DocumentData & {
@@ -140,7 +141,7 @@ export const RoomStorage:FC = ({children}) => {
     setNotes(roomSnap?.data()?.notes)
   }, [setNotes])
 
-  const addNotes = async (slug: string, notes) => {
+  const addNotes = async (slug: string, notes:Note[]) => {
     try {
       
       const roomRef = doc(db, "room", slug);
@@ -159,21 +160,17 @@ export const RoomStorage:FC = ({children}) => {
     const roomRef = doc(db, "room", slug);
     const roomSnap = await getDoc(roomRef);
     const selectedItem = roomSnap?.data()?.notes.find(({id:noteId}:{id:string}) => noteId === id)
-    const itemToAdd = {
-      id: id,
-      text: selectedItem.text,
-      checked:checked
-    }
-    console.log('itemToRemove', selectedItem)
-    await updateDoc(roomRef, {
-      notes: arrayRemove(selectedItem)
+    const items = roomSnap?.data()?.notes.map((note:Note) => (
+        note.id === id ? {
+        id: id,
+        text: selectedItem.text,
+        checked:checked }
+       : note
+    ));
+    console.log('itemToRemove', selectedItem, items)
+    await setDoc(roomRef, {
+      notes: items
     });
-    console.log("itemToAdd", itemToAdd)
-
-    const addToArray = await updateDoc(roomRef, {
-      notes: arrayUnion(itemToAdd)
-    });
-    console.log("addToArray", addToArray)
   }
 
   return (
