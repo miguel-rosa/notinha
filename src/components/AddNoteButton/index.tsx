@@ -1,6 +1,6 @@
 import React, { FC, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { v4 as uuid   } from "uuid";
+import{ v4 as uuid} from "uuid";
 import useGroup from "../../contexts/RoomContext";
 
 
