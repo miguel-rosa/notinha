@@ -61,7 +61,7 @@ export const RoomStorage:FC = ({children}) => {
     const roomRef = doc(db, "room", slug);
     const roomSnap = await getDoc(roomRef);
     console.log('roomSnap', roomSnap)
-    //Criar retorno para o usuário, avisando que o grupo já existe
+    // Criar retorno para o usuário, avisando que o grupo já existe
     if(roomSnap.exists()) {
       console.log("group already exists")
       return
