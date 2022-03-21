@@ -1,4 +1,11 @@
-  deploy-web-staging:
+name: Expo Publish on Staging
+on:
+  push:
+    branches:
+      - develop
+      - main
+jobs:
+  publish: deploy-web-staging:
 runs-on: ubuntu-latest
 steps:
   - name: Checkout
