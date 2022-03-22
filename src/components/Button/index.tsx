@@ -4,7 +4,7 @@ import Text from '../Text';
 
 type ButtonProps = {
   onPress?():void;
-  type?: 'primary' | 'secondary',
+  type?: 'primary' | 'secondary' | 'danger',
   size?: 'big' | 'medium' | 'small',
   useSpacing?: boolean;
   buttonStyle?: TextStyle;
@@ -51,6 +51,9 @@ const styles = StyleSheet.create({
   secondaryBackground: {
     backgroundColor:'transparent'
   },
+  dangerBackground: {
+    backgroundColor: "rgb(255,88,88)"
+  },
   bigButton: {
     paddingHorizontal: 20,
     paddingVertical: 16
@@ -77,6 +80,9 @@ const styles = StyleSheet.create({
   },
   secondaryText: {
     color: '#040404'
+  },
+  dangerText: {
+    color: "#fff"
   }
 })
 

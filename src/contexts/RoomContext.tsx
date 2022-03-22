@@ -12,12 +12,17 @@ type RoomContextType = {
   alreadyHaveRoom():string | undefined;
   navigateToNotes(slug: string):void;
   note: any;
-  slug: string;
   hasRoom: boolean;
   initiated: boolean;
   addNotes():void;
-  createRoom(slug: string): void;
-  handleNoteCheck(id: string, checked:boolean): void
+  addNote(note:Note):void;
+  createRoom(slug: string, name:string): void;
+  handleNoteCheck(id: string, checked:boolean): void;
+  deleteNote(id:string):void;
+  group: {
+    slug: string;
+    name: string;
+  }
 }
 
 type Note = {
@@ -48,7 +53,10 @@ export const RoomStorage:FC = ({children}) => {
   const [notes, setNotes] = useState<Notes | undefined>(undefined)
   const [hasRoom, setHasRoom] = useState<boolean>(false);
   const [initiated, setInitiated] = useState<boolean>(false);
+
+  const [name, setName] = useState("")
   const [slug, setSlug] = useState("")
+
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const alreadyHaveRoom = async () => {
@@ -57,7 +65,8 @@ export const RoomStorage:FC = ({children}) => {
     setSlug(roomSlug)
     return true
   }
-  const createRoom = async (slug: string) => {
+
+  const createRoom = async (slug: string, name: string) => {
     const roomRef = doc(db, "room", slug);
     const roomSnap = await getDoc(roomRef);
     console.log('roomSnap', roomSnap)
@@ -67,9 +76,10 @@ export const RoomStorage:FC = ({children}) => {
       return
     }
     try {
-      const newRoom = await setDoc(doc(db, "room", slug), {notes:[]});
+      const newRoom = await setDoc(doc(db, "room", slug), {name:name, notes:[]});
       console.log('Room criado!', newRoom)
       setSlug(slug)
+      setName(name)
       navigateToNotes(slug)
     } catch (e) {
       console.error("Error creating document: ", e);
@@ -83,8 +93,10 @@ export const RoomStorage:FC = ({children}) => {
       const roomRef = doc(db, "room", slug);
       const roomSnap = await getDoc(roomRef);
       if(!roomSnap.exists()) return
+      navigateToNotes(slug)
       const unsub = onSnapshot(doc(db, "room", slug), (doc) => {
         setNotes(doc?.data()?.notes)
+        setName(doc?.data()?.name)
     });
       AsyncStorage.setItem('@room-slug', slug);
     }
@@ -92,14 +104,12 @@ export const RoomStorage:FC = ({children}) => {
   }, [slug])
 
   useEffect(() => {
-    if(!slug) return
-    const roomRef = doc(db, "room", slug);
-    console.log('roomRef', roomRef)
-    const unsub = onSnapshot(roomRef, (doc) => {
-      console.log('onSnap')
-      console.log("test",doc?.data()?.notes);
-    });  
-    return () => unsub()
+    const checkSlug = async () => {
+      const roomSlug = await AsyncStorage.getItem('@room-slug')
+      if(!roomSlug) return
+      setSlug(roomSlug)
+    }
+    checkSlug()
   }, [])
 
   const getRoom = async (text:string) => {
@@ -112,6 +122,8 @@ export const RoomStorage:FC = ({children}) => {
       setHasRoom(false);
       return
     }
+    console.log('roomSnap?.data()?.name', roomSnap?.data()?.name)
+    setName(roomSnap?.data()?.name)
     setSlug(text)
     setHasRoom(true)
     navigateToNotes(text)
@@ -140,9 +152,19 @@ export const RoomStorage:FC = ({children}) => {
     setNotes(roomSnap?.data()?.notes)
   }, [setNotes])
 
+  const addNote = async (note:Note) => {
+    try {
+      const roomRef = doc(db, "room", slug);
+      await updateDoc(roomRef, {
+        notes: arrayUnion(note)
+      });
+
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  }
   const addNotes = async (slug: string, notes:Note[]) => {
     try {
-      
       const roomRef = doc(db, "room", slug);
       await updateDoc(roomRef, {
         notes: arrayUnion(...notes)
@@ -151,6 +173,19 @@ export const RoomStorage:FC = ({children}) => {
 
     } catch (e) {
       console.error("Error adding document: ", e);
+    }
+  }
+
+  const deleteNote = async (id:string) => {
+    try {
+      const roomRef = doc(db, "room", slug);
+      const roomSnap = await getDoc(roomRef);
+      const selectedItem = roomSnap?.data()?.notes.find(({id:noteId}:{id:string}) => noteId === id)
+      await updateDoc(roomRef, {
+        notes: arrayRemove(selectedItem)
+      });
+    } catch (e) {
+      console.error("Error deleting document: ", e);
     }
   }
 
@@ -168,7 +203,8 @@ export const RoomStorage:FC = ({children}) => {
     ));
     console.log('itemToRemove', selectedItem, items)
     await setDoc(roomRef, {
-      notes: items
+      notes: items,
+      name: roomSnap?.data()?.name
     });
   }
 
@@ -181,11 +217,16 @@ export const RoomStorage:FC = ({children}) => {
         getNotes,
         initiated,
         notes,
-        slug,
         navigateToNotes,
         addNotes,
+        addNote,
+        deleteNote,
         createRoom,
-        handleNoteCheck
+        handleNoteCheck,
+        group: {
+          name,
+          slug
+        }
       }}
     >
       {children}

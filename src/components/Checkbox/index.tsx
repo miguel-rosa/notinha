@@ -4,13 +4,13 @@ import IconCheck from "../Icons/IconCheck";
 
 type CheckboxProps = {
   checked: boolean;
-  setChecked(p:any): void;
+  onPress?(): void;
 }
 
-const Checkbox:FC<CheckboxProps> = ({checked, setChecked}) => {
+const Checkbox:FC<CheckboxProps> = ({checked, onPress}) => {
   return (
-    <TouchableOpacity style={styles.checkBox} onPress={() => setChecked((previousChecked:boolean) => !previousChecked )}>
-      {checked && <IconCheck style={styles.icon}/>}
+    <TouchableOpacity style={styles.checkBox} onPress={onPress}>
+      {checked && <IconCheck color="rgb(118,118,118)" style={styles.icon}/>}
     </TouchableOpacity>
   )
 }
@@ -19,11 +19,12 @@ const styles = StyleSheet.create({
   checkBox: {
     width: 22,
     height: 22,
-    borderWidth:1.8,
-    borderColor: "black",
+    borderWidth:1,
+    borderColor: "rgb(220,220,220)",
     borderRadius: 50,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    backgroundColor: "#f1f1f1"
   },
   icon: {
     position: "absolute"

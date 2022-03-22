@@ -16,7 +16,7 @@ type AddNoteButtonProps = {
 
 const AddNoteButton:FC<AddNoteButtonProps> = ({}) => {
   const [items, setItems] = useState([]);
-  const {slug, addNotes} = useGroup();
+  const {group:{slug}, addNotes} = useGroup();
   const [text, setText] = useState("");
   const [showModal, setShowModal] = useState(false);
 

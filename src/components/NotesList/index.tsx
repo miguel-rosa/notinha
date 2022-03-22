@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { FlatList, StyleSheet, ScrollView} from "react-native";
+import { FlatList, StyleSheet, View} from "react-native";
 import NoteItem from "./components/NoteItem";
 
 type NotesList = {
@@ -13,19 +13,20 @@ const NotesList:FC<NotesList> = ({notes}) => {
    )
 
   return (
-    <ScrollView style={styles.notesList}>
+    <View style={styles.notesList}>
       <FlatList 
         data={notes}
         renderItem={renderItem}
         keyExtractor={notes => notes.id}
       />
-    </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   notesList: {
-    padding: 16
+    paddingVertical: 16,
+    paddingBottom:54
   }
 })
 

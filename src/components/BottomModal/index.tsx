@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 16,
     // height: 500,
     position: 'absolute',
-    elevation: 1,
+    elevation: 10,
     alignSelf: 'stretch',
     left:0,
     right:0,

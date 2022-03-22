@@ -8,7 +8,7 @@ type InputProps = {
   onChangeText(text:string):void;
   withoutBorder?: boolean;
   style?: TextStyle,
-  autoFocus: boolean,
+  autoFocus?: boolean,
   value?: string;
 }
 
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   
   },
   textInput: {
+    fontFamily: "Poppins_500Medium",
     borderColor:'#c1c9d4',
     paddingVertical: 8,
     paddingHorizontal: 16,

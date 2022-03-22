@@ -12,14 +12,32 @@ type CreateGroupModalProps = {
 }
 
 const CreateGroupModal:FC<CreateGroupModalProps> = ({closeModal}) => {
-  const {createRoom, initiated, hasRoom} = useGroup();
+  const {createRoom} = useGroup();
+  const [groupName, setGroupName] = useState("");
   const [code, setCode] = useState("");
+
+  const handleCreateGroup = () => {
+    createRoom(code,groupName)
+    setGroupName("");
+    setCode("");
+  }
+
   return (
     <BottomModal closeModal={() => closeModal(false)} title="Criar grupo">
-        <Input onChangeText={(text:string) => setCode(text)} placeholder="Digite aqui o código do grupo que você deseja criar"/>
-        <Button onPress={() => createRoom(code) }>Criar grupo</Button>
+        <Input title="Nome do grupo" style={styles.input} onChangeText={(text:string) => setGroupName(text)} placeholder="Digite aqui o código do grupo que você deseja criar"/>
+        <Input title="Código do grupo" onChangeText={(text:string) => setCode(text)} placeholder="Digite aqui o nome do grupo"/>
+        <Button buttonStyle={styles.button} onPress={handleCreateGroup}>Criar grupo</Button>
     </BottomModal>
   )
 }
+
+const styles = StyleSheet.create({
+  input: {
+    marginVertical: 8
+  },
+  button: {
+    marginTop: 16
+  }
+})
 
 export default CreateGroupModal;

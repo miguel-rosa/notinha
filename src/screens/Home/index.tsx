@@ -10,18 +10,6 @@ const Home:React.FC<{navigation: any}> = ({navigation}) => {
   const [showBottomModal, setShowBottomModal] = useState(false);
   const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
 
-  const {alreadyHaveRoom, slug} = useGroup();
-
-  const checkRoom = useCallback(async() => {
-    const room = await alreadyHaveRoom();
-    console.log('room', room)
-    return !!room && navigation.navigate("Notes") 
-  }, [])
-
-  useEffect(() => {
-    checkRoom()
-  }, [checkRoom])
-
   return (
     <View style={styles.home}>
       <Logo/>

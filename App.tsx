@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Home from "./src/screens/Home";
 import Notes from "./src/screens/Notes";
@@ -9,6 +10,7 @@ import AppLoading from 'expo-app-loading';
 import { useFonts, Poppins_500Medium, Poppins_700Bold } from '@expo-google-fonts/poppins';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -24,7 +26,7 @@ export default function App() {
         <RoomStorage>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
-        <Stack.Screen name="Notes" component={Notes}/>
+        <Stack.Screen name="Notes" component={Notes} options={{headerShown: false}}/>
       </Stack.Navigator>
       <StatusBar style="auto" />
     </RoomStorage>
