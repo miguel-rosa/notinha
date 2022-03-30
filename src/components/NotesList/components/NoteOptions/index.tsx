@@ -1,12 +1,12 @@
 import React from "react";
 import useNoteOptions from "../../../../contexts/NoteOptionsContext";
-import useGroup from "../../../../contexts/RoomContext";
+import useRoom from "../../../../contexts/RoomContext";
 import BottomModal from "../../../BottomModal";
 import Button from "../../../Button";
 
 const NoteOptions = () => {
   const {isNoteOptionsVisible, hideOptions, noteId} = useNoteOptions();
-  const { deleteNote } = useGroup();
+  const { deleteNote } = useRoom();
 
   const handleButtonClick = () => {
      deleteNote(noteId)

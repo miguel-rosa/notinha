@@ -1,10 +1,14 @@
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import React, {FC} from 'react';
+import { StyleSheet, View, ViewStyle } from 'react-native';
 import Text from '../Text';
 
-const Logo = () => {
+type LogoProps = {
+  style: ViewStyle
+}
+
+const Logo:FC<LogoProps> = ({style}) => {
   return (
-    <View style={styles.logo}>
+    <View style={[styles.logo, style]}>
       <Text style={styles.logoText} weight="700">nótinha</Text>
     </View>
   )

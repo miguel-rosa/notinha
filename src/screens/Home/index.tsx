@@ -4,7 +4,7 @@ import Button from "../../components/Button";
 import CreateGroupModal from "../../components/CreateGroupModal";
 import JoinGroupModal from "../../components/JoinGroupModal";
 import Logo from "../../components/Logo";
-import useGroup from "../../contexts/RoomContext";
+import useRoom from "../../contexts/RoomContext";
 
 const Home:React.FC<{navigation: any}> = ({navigation}) => {
   const [showBottomModal, setShowBottomModal] = useState(false);

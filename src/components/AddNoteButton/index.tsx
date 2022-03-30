@@ -1,7 +1,7 @@
 import React, { FC, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import{ v4 as uuid} from "uuid";
-import useGroup from "../../contexts/RoomContext";
+import useRoom from "../../contexts/RoomContext";
 
 
 import BottomModal from "../BottomModal";
@@ -16,7 +16,7 @@ type AddNoteButtonProps = {
 
 const AddNoteButton:FC<AddNoteButtonProps> = ({}) => {
   const [items, setItems] = useState([]);
-  const {group:{slug}, addNotes} = useGroup();
+  const {group:{slug}, addNotes} = useRoom();
   const [text, setText] = useState("");
   const [showModal, setShowModal] = useState(false);
 

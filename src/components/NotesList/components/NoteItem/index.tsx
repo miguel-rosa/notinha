@@ -1,7 +1,7 @@
 import React, { FC, useState, useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import useNoteOptions from "../../../../contexts/NoteOptionsContext";
-import useGroup from "../../../../contexts/RoomContext";
+import useRoom from "../../../../contexts/RoomContext";
 import BottomModal from "../../../BottomModal";
 import Button from "../../../Button";
 import Checkbox from "../../../Checkbox";
@@ -17,7 +17,7 @@ type NoteItemProps = {
 const NoteItem: FC<NoteItemProps> = ({ id, text, checked }) => {
   const [isChecked, setIsChecked] = useState(checked)
   
-  const { handleNoteCheck } = useGroup();
+  const { handleNoteCheck } = useRoom();
   const {showOptions} = useNoteOptions();
 
   useEffect(() => {

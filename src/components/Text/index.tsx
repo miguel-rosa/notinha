@@ -4,7 +4,7 @@ import { StyleProp, TextStyle, Text as RNText} from "react-native";
 type TextProps = {
   style?: StyleProp<TextStyle>;
   weight?: "500" | "700",
-  fontSize?: number
+  fontSize?: number,
 }
 
 const Text:FC<TextProps> = ({style, weight="500", children, fontSize}) => {
@@ -18,7 +18,7 @@ const Text:FC<TextProps> = ({style, weight="500", children, fontSize}) => {
         fontFamily: fontWeight[weight],
         fontSize: fontSize
       },
-      style
+      style,
     ]}>
       {children}
     </RNText>

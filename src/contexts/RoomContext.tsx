@@ -1,10 +1,13 @@
 import React, { FC, createContext, useState, useContext, useEffect, useCallback } from "react";
-import { getFirestore, collection, query, getDocs, onSnapshot, arrayUnion, updateDoc, doc, getDoc, setDoc, DocumentData, where, arrayRemove} from "firebase/firestore";
+import { getFirestore, collection, query, getDocs,onSnapshot, arrayUnion, updateDoc, doc, getDoc, setDoc, DocumentData, where, arrayRemove, deleteDoc} from "firebase/firestore";
 
-import { app } from "../../data/firebase";
+import { app, auth } from "../../data/firebase";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import {queryUserRoom} from "./queries/queryUserRoom";
 
 type RoomContextType = {
   getRoom(room: string): void;
@@ -22,7 +25,9 @@ type RoomContextType = {
   group: {
     slug: string;
     name: string;
-  }
+    isFavorited: boolean;
+  },
+  handleFavoriteClick(isFavorited: boolean): void;
 }
 
 type Note = {
@@ -40,22 +45,23 @@ type RoomData = DocumentData & {
   slug: string
 }
 
-type RootStackParamList = {
+export type RootStackParamList = {
   Notes: { slug: string };
+  SignIn: {}
 }
 
 const db = getFirestore(app);
-const queryGroups= query(collection(db, "room"));
-
 export const RoomContext = createContext({} as RoomContextType);
 
 export const RoomStorage:FC = ({children}) => {
+  const [user] = useAuthState(auth)
   const [notes, setNotes] = useState<Notes | undefined>(undefined)
   const [hasRoom, setHasRoom] = useState<boolean>(false);
   const [initiated, setInitiated] = useState<boolean>(false);
 
   const [name, setName] = useState("")
   const [slug, setSlug] = useState("")
+  const [isFavorited, setIsFavorited] = useState(false)
 
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
@@ -76,7 +82,7 @@ export const RoomStorage:FC = ({children}) => {
       return
     }
     try {
-      const newRoom = await setDoc(doc(db, "room", slug), {name:name, notes:[]});
+      const newRoom = await setDoc(doc(db, "room", slug), {name:name, notes:[], user:user?.email});
       console.log('Room criado!', newRoom)
       setSlug(slug)
       setName(name)
@@ -88,7 +94,9 @@ export const RoomStorage:FC = ({children}) => {
   }
 
   useEffect(() => {
-    if(!slug) return
+    console.log('slug', slug)
+    console.log("user", user)
+    if(!user || !slug) return
     const slugExist = async () => {
       const roomRef = doc(db, "room", slug);
       const roomSnap = await getDoc(roomRef);
@@ -122,35 +130,54 @@ export const RoomStorage:FC = ({children}) => {
       setHasRoom(false);
       return
     }
+
     console.log('roomSnap?.data()?.name', roomSnap?.data()?.name)
     setName(roomSnap?.data()?.name)
     setSlug(text)
     setHasRoom(true)
     navigateToNotes(text)
   }
-  // const getRoom = async (text:string) => {
-  //   const querySnapshot = await getDocs(queryGroups,) 
-  //   const actualRoom = querySnapshot.docs.find((item) => item.data()['slug'] === text )
-  //   setInitiated(true)
-  //   if(!actualRoom) {
-  //     setHasRoom(false);
-  //     return
-  //   }
-  //   setSlug(text)
-  //   setHasRoom(true)
-  //   navigateToNotes(text)
-  // }
 
   const navigateToNotes = (slug: string) => {
     navigation.navigate("Notes", {slug}) 
   }
 
   const getNotes = useCallback(async (text:string) => {
-    
+   
+    console.log('getNotes')
     const roomRef = doc(db, "room", text);
+    console.log("where", text, user?.email)
+    console.log("where", text)
+
     const roomSnap = await getDoc(roomRef);
+
+    const isRoomFavorited = (await getDocs(queryUserRoom(db, text, user?.email))).empty
+    setIsFavorited(!isRoomFavorited)
+    console.log('!isRoomFavorited', !isRoomFavorited)
     setNotes(roomSnap?.data()?.notes)
   }, [setNotes])
+
+  const handleFavoriteClick = async (shouldAdd:boolean) => {
+    try {
+    if(shouldAdd) {
+      await setDoc(doc(db, "userRoom"), {
+        roomSlug: slug,
+        userEmail: user?.email
+      })
+    }
+    else {
+      const querySnapshot = await getDocs(queryUserRoom(db, slug, user?.email))
+      const deleteOps = [];
+
+      querySnapshot.forEach((doc) => {
+        deleteOps.push(deleteDoc(doc.ref));      
+      });
+      Promise.all(deleteOps).then(() => console.log('documents deleted'))
+    }
+    } catch (e) {
+      console.log("Error on favorites", e)
+    }
+  }
 
   const addNote = async (note:Note) => {
     try {
@@ -158,19 +185,17 @@ export const RoomStorage:FC = ({children}) => {
       await updateDoc(roomRef, {
         notes: arrayUnion(note)
       });
-
     } catch (e) {
       console.error("Error adding document: ", e);
     }
   }
+
   const addNotes = async (slug: string, notes:Note[]) => {
     try {
       const roomRef = doc(db, "room", slug);
       await updateDoc(roomRef, {
         notes: arrayUnion(...notes)
       });
-      // setDoc(roomRef, {notes}, { merge: true })
-
     } catch (e) {
       console.error("Error adding document: ", e);
     }
@@ -204,7 +229,8 @@ export const RoomStorage:FC = ({children}) => {
     console.log('itemToRemove', selectedItem, items)
     await setDoc(roomRef, {
       notes: items,
-      name: roomSnap?.data()?.name
+      name: roomSnap?.data()?.name,
+      user: roomSnap?.data()?.user
     });
   }
 
@@ -225,8 +251,10 @@ export const RoomStorage:FC = ({children}) => {
         handleNoteCheck,
         group: {
           name,
-          slug
-        }
+          slug,
+          isFavorited
+        },
+        handleFavoriteClick
       }}
     >
       {children}
@@ -234,12 +262,12 @@ export const RoomStorage:FC = ({children}) => {
   )
 }
 
-const useGroup = () => {
+const useRoom = () => {
   const context = useContext(RoomContext);
 
-  if(!context) throw new Error('useGroup should be used inside a RoomContext');
+  if(!context) throw new Error('useRoom should be used inside a RoomContext');
 
   return context
 }
 
-export default useGroup;
+export default useRoom;

@@ -1,6 +1,6 @@
 import React, { FC, useState}from "react";
 import { Modal, StyleSheet, View } from "react-native";
-import useGroup from "../../contexts/RoomContext";
+import useRoom from "../../contexts/RoomContext";
 
 import BottomModal from "../BottomModal";
 import Button from "../Button";
@@ -12,7 +12,7 @@ type CreateGroupModalProps = {
 }
 
 const CreateGroupModal:FC<CreateGroupModalProps> = ({closeModal}) => {
-  const {createRoom} = useGroup();
+  const {createRoom} = useRoom();
   const [groupName, setGroupName] = useState("");
   const [code, setCode] = useState("");
 

@@ -1,6 +1,6 @@
 import React, { FC, useState}from "react";
 import { Modal, StyleSheet, View } from "react-native";
-import useGroup from "../../contexts/RoomContext";
+import useRoom from "../../contexts/RoomContext";
 
 import BottomModal from "../BottomModal";
 import Button from "../Button";
@@ -12,7 +12,7 @@ type JoinGroupModalProps = {
 }
 
 const JoinGroupModal:FC<JoinGroupModalProps> = ({closeModal}) => {
-  const {getRoom, initiated, hasRoom} = useGroup();
+  const {getRoom } = useRoom();
   const [code, setCode] = useState("");
   return (
     <BottomModal closeModal={() => closeModal(false)} title="Entrar em um grupo">
