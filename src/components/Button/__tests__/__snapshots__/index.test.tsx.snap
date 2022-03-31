@@ -1,0 +1,377 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSS API size big 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0d66ff",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 20,
+      "paddingVertical": 16,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 18,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API size medium 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0d66ff",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API size small 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0d66ff",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 12,
+      "paddingVertical": 8,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 14,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API type danger 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "rgb(255,88,88)",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API type primary 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0d66ff",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API type secondary 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "transparent",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#040404",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API useSpacing false 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0d66ff",
+      "borderRadius": 8,
+      "marginVertical": 0,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;
+
+exports[`CSS API useSpacing true 1`] = `
+<View
+  accessible={true}
+  focusable={true}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#0d66ff",
+      "borderRadius": 8,
+      "marginVertical": 6,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+      "paddingVertical": 12,
+    }
+  }
+>
+  <Text
+    style={
+      Array [
+        Object {
+          "fontFamily": "Poppins_500Medium",
+          "fontSize": undefined,
+        },
+        Array [
+          Object {
+            "color": "#fff",
+          },
+          Object {
+            "fontSize": 16,
+          },
+          Object {},
+        ],
+      ]
+    }
+  >
+    Inner button text
+  </Text>
+</View>
+`;

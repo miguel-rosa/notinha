@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSS API font weight 500 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "fontFamily": "Poppins_500Medium",
+        "fontSize": undefined,
+      },
+      undefined,
+    ]
+  }
+>
+  Text Component
+</Text>
+`;
+
+exports[`CSS API font weight 700 1`] = `
+<Text
+  style={
+    Array [
+      Object {
+        "fontFamily": "Poppins_700Bold",
+        "fontSize": undefined,
+      },
+      undefined,
+    ]
+  }
+>
+  Text Component
+</Text>
+`;
