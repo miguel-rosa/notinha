@@ -42,20 +42,18 @@ const Notes = ({navigation}) => {
   };
 
   const onBackButtonPress = () => {
-    navigation.navigate('User');
+    navigation.navigate('Groups');
   };
 
-  console.log('notes', notes);
   return (
     <NoteOptionsStorage>
       <ScrollView style={styles.notes}>
-      <View style={styles.header}>
-        <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onBackButtonPress}>Voltar</Button>
-        <IconFavorite fill={isFavorited} onPress={onIconFavoritePress}/>
-        <UserButton navigation={navigation}/>
-      </View>
-          <Text fontSize={28} weight="700">{name}</Text>
-          <NotesList notes={notes} />
+        <View style={styles.header}>
+          <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onBackButtonPress}>Voltar</Button>
+          <IconFavorite fill={isFavorited} onPress={onIconFavoritePress}/>
+        </View>
+        <Text fontSize={28} weight="700">{name}</Text>
+        <NotesList notes={notes} />
       </ScrollView>
       <AddNoteForm/>
       <NoteOptions/>

@@ -1,11 +1,12 @@
 import React, { FC, createContext, useState, useContext, useEffect, useCallback } from 'react';
-import { getFirestore, collection, query, getDocs,onSnapshot, arrayUnion, updateDoc, doc, getDoc, setDoc, DocumentData, where, arrayRemove, deleteDoc} from 'firebase/firestore';
+import { getFirestore, collection, query, getDocs,onSnapshot, arrayUnion, updateDoc, doc, getDoc, setDoc, DocumentData, where, arrayRemove, deleteDoc, addDoc, FieldPath} from 'firebase/firestore';
 
 import { app, auth } from '../../data/firebase';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigation } from '@react-navigation/native';
+import { createNavigatorFactory, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { v4 as uuid} from 'uuid';
 
 import {queryUserRoom} from './queries/queryUserRoom';
 
@@ -41,6 +42,8 @@ type Notes = {
   notes: Note[]
 }
 
+type Rooms = any;
+
 type RoomData = DocumentData & {
   slug: string
 }
@@ -63,6 +66,8 @@ export const RoomStorage:FC = ({children}) => {
   const [slug, setSlug] = useState('');
   const [isFavorited, setIsFavorited] = useState(false);
 
+  const [userSavedRooms, setUserSavedRoomd] = useState<Rooms | undefined>(undefined);
+
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const alreadyHaveRoom = async () => {
@@ -83,6 +88,10 @@ export const RoomStorage:FC = ({children}) => {
     }
     try {
       const newRoom = await setDoc(doc(db, 'room', slug), {name:name, notes:[], user:user?.email});
+      await addDoc(collection(db, 'userRoom'), {
+        roomSlug: slug,
+        userEmail: user?.email,
+      });
       console.log('Room criado!', newRoom);
       setSlug(slug);
       setName(name);
@@ -105,7 +114,7 @@ export const RoomStorage:FC = ({children}) => {
       const unsub = onSnapshot(doc(db, 'room', slug), (doc) => {
         setNotes(doc?.data()?.notes);
         setName(doc?.data()?.name);
-    });
+      });
       AsyncStorage.setItem('@room-slug', slug);
     };
     slugExist();
@@ -130,16 +139,17 @@ export const RoomStorage:FC = ({children}) => {
       setHasRoom(false);
       return;
     }
-
-    console.log('roomSnap?.data()?.name', roomSnap?.data()?.name);
     setName(roomSnap?.data()?.name);
     setSlug(text);
     setHasRoom(true);
     navigateToNotes(text);
   };
 
-  const navigateToNotes = (slug: string) => {
-    navigation.navigate('Notes', {slug});
+  const navigateToNotes = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Notes' }],
+    });
   };
 
   const getNotes = useCallback(async (text:string) => {
@@ -159,21 +169,23 @@ export const RoomStorage:FC = ({children}) => {
 
   const handleFavoriteClick = async (shouldAdd:boolean) => {
     try {
-    if (shouldAdd) {
-      await setDoc(doc(db, 'userRoom'), {
-        roomSlug: slug,
-        userEmail: user?.email,
-      });
-    }
-    else {
-      const querySnapshot = await getDocs(queryUserRoom(db, slug, user?.email));
-      const deleteOps = [];
+      if (shouldAdd) {
+        await addDoc(collection(db, 'userRoom'), {
+          roomSlug: slug,
+          userEmail: user?.email,
+        });
+        setIsFavorited(true);
+      }
+      else {
+        const querySnapshot = await getDocs(queryUserRoom(db, slug, user?.email));
+        const deleteOps = [] as any;
 
-      querySnapshot.forEach((doc) => {
-        deleteOps.push(deleteDoc(doc.ref));
-      });
-      Promise.all(deleteOps).then(() => console.log('documents deleted'));
-    }
+        querySnapshot.forEach((doc) => {
+          deleteOps.push(deleteDoc(doc.ref));
+        });
+        Promise.all(deleteOps).then(() => console.log('documents deleted'));
+        setIsFavorited(false);
+      }
     } catch (e) {
       console.log('Error on favorites', e);
     }
@@ -220,11 +232,11 @@ export const RoomStorage:FC = ({children}) => {
     const roomSnap = await getDoc(roomRef);
     const selectedItem = roomSnap?.data()?.notes.find(({id:noteId}:{id:string}) => noteId === id);
     const items = roomSnap?.data()?.notes.map((note:Note) => (
-        note.id === id ? {
+      note.id === id ? {
         id: id,
         text: selectedItem.text,
         checked:checked }
-       : note
+        : note
     ));
     console.log('itemToRemove', selectedItem, items);
     await setDoc(roomRef, {
@@ -232,6 +244,38 @@ export const RoomStorage:FC = ({children}) => {
       name: roomSnap?.data()?.name,
       user: roomSnap?.data()?.user,
     });
+  };
+
+  const getUserFavoriteRooms = async () => {
+    console.log('called');
+    const userRoomRef = collection(db, 'userRoom');
+    const queryRoomsOfUser = query(userRoomRef, where('userEmail', '==', user?.email));
+    const querySnapshotRoomsOfUser = await getDocs(queryRoomsOfUser);
+
+    const slugs = querySnapshotRoomsOfUser.docs?.map( (doc) => {
+      console.log('inside');
+      console.log('doc', doc);
+      return doc?.data()?.roomSlug;
+    });
+    console.log('slugs', slugs);
+
+    const roomRef = collection(db, 'room');
+    const queryRooms = query(roomRef, where('__name__', 'in', slugs));
+    const querySnapshotRooms = await getDocs(queryRooms);
+
+    const rooms = querySnapshotRooms.docs.map( doc => {
+      return {
+        slug: doc.id,
+        name: doc.data().name,
+        notes: doc.data().notes.slice(0, 3).map( ({id, text}) => ({
+          text: `${text.slice(0,24)}...`,
+          id: id,
+        })),
+      };
+    });
+    setUserSavedRoomd(rooms);
+    // const roomSnap = await getDoc(roomRef);
+    // console.log('querySnapshot', roomSnap);
   };
 
   return (
@@ -254,7 +298,9 @@ export const RoomStorage:FC = ({children}) => {
           slug,
           isFavorited,
         },
+        userSavedRooms,
         handleFavoriteClick,
+        getUserFavoriteRooms,
       }}
     >
       {children}

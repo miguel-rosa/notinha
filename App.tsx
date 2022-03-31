@@ -1,3 +1,4 @@
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -36,22 +37,22 @@ export default function App() {
 
   return (
     <NavigationContainer>
-        <RoomStorage>
-      <Stack.Navigator>
+      <RoomStorage>
+        <Stack.Navigator>
 
-        {user ?
-          (
-          // <Stack.Screen name="Groups" component={Groups} options={{headerShown: false}}/>
-           <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
-          )
-          : <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false}}/>
-        }
-        <Stack.Screen name="User" component={User} options={{headerShown: false}}/>
-        <Stack.Screen name="Notes" component={Notes} options={{headerShown: false}}/>
+          {user ?
+            (
+              <Stack.Screen name="Groups" component={Groups} options={{headerShown: false}}/>
+            )
+            : <Stack.Screen name="SignIn" component={SignIn} options={{headerShown: false}}/>
+          }
+          <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
+          <Stack.Screen name="User" component={User} options={{headerShown: false}}/>
+          <Stack.Screen name="Notes" component={Notes} options={{headerShown: false}}/>
 
-      </Stack.Navigator>
-      <StatusBar style="auto" />
-    </RoomStorage>
+        </Stack.Navigator>
+        <StatusBar style="auto" />
+      </RoomStorage>
     </NavigationContainer>
   );
 }

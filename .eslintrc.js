@@ -27,6 +27,7 @@ module.exports = {
       files: ['*.ts', '*.tsx'],
       rules: {
         'no-undef': 0,
+        'indent': ['error', 2],
       },
     },
   ],

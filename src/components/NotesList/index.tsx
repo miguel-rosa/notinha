@@ -10,7 +10,7 @@ const NotesList:FC<NotesList> = ({notes}) => {
 
   const renderItem = ({item}) => (
     <NoteItem {...item}/>
-   );
+  );
 
   return (
     <View style={styles.notesList}>
@@ -26,7 +26,6 @@ const NotesList:FC<NotesList> = ({notes}) => {
 const styles = StyleSheet.create({
   notesList: {
     paddingVertical: 16,
-    paddingBottom:54,
   },
 });
 
