@@ -1,10 +1,10 @@
-import React, {useEffect, useState, useCallback } from "react";
-import { View, StyleSheet} from "react-native";
-import Button from "../../components/Button";
-import CreateGroupModal from "../../components/CreateGroupModal";
-import JoinGroupModal from "../../components/JoinGroupModal";
-import Logo from "../../components/Logo";
-import useRoom from "../../contexts/RoomContext";
+import React, {useEffect, useState, useCallback } from 'react';
+import { View, StyleSheet} from 'react-native';
+import Button from '../../components/Button';
+import CreateGroupModal from '../../components/CreateGroupModal';
+import JoinGroupModal from '../../components/JoinGroupModal';
+import Logo from '../../components/Logo';
+import useRoom from '../../contexts/RoomContext';
 
 const Home:React.FC<{navigation: any}> = ({navigation}) => {
   const [showBottomModal, setShowBottomModal] = useState(false);
@@ -15,24 +15,24 @@ const Home:React.FC<{navigation: any}> = ({navigation}) => {
       <Logo/>
       <Button onPress={() => setShowCreateRoomModal(true)}>Criar grupo</Button>
       {showCreateRoomModal && <CreateGroupModal closeModal={() => setShowCreateRoomModal(false)}/>}
-      <Button type='secondary' onPress={() => setShowBottomModal(true)}>Entrar em um grupo</Button>
+      <Button type="secondary" onPress={() => setShowBottomModal(true)}>Entrar em um grupo</Button>
       {showBottomModal && <JoinGroupModal closeModal={() => setShowBottomModal(false)}/>}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   home: {
     flex: 1,
     padding: 20,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   mainButton:{
     backgroundColor: '#0d66ff',
     alignItems: 'center',
     borderRadius: 8,
     fontSize: 18,
-    padding: 16
+    padding: 16,
   },
   secondaryButton: {
     marginTop: 10,
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize:16,
-    color: '#fff'
-  }
-})
+    color: '#fff',
+  },
+});
 
 export default Home;

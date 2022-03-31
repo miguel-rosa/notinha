@@ -1,7 +1,7 @@
-import React, { FC } from "react";
-import { StyleSheet, ScrollView, View} from "react-native";
-import GroupsList from "../../components/GroupsList";
-import Text from "../../components/Text";
+import React, { FC } from 'react';
+import { StyleSheet, ScrollView, View} from 'react-native';
+import GroupsList from '../../components/GroupsList';
+import Text from '../../components/Text';
 
 const Groups:FC = () => {
   return (
@@ -9,14 +9,14 @@ const Groups:FC = () => {
       <Text fontSize={28} weight="700">Grupos</Text>
       {/* <GroupsList /> */}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   groups: {
     flex: 1,
-    padding: 20
+    padding: 20,
   },
-})
+});
 
 export default Groups;

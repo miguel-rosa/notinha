@@ -11,7 +11,9 @@
     "build-web": "expo build:web && cd web-build && vercel",
     "build-android": "expo build:android",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch",
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
     "@expo-google-fonts/poppins": "^0.2.2",

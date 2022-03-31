@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import Text from "../../components/Text";
-import { StyleSheet, View } from "react-native";
-import Logo from "../../components/Logo";
-import SignInButton from "../../components/SignInButton";
-import JoinRoomButton from "../../components/JoinRoomButton";
-import Button from "../../components/Button";
-import JoinGroupModal from "../../components/JoinGroupModal";
+import React, { useState } from 'react';
+import Text from '../../components/Text';
+import { StyleSheet, View } from 'react-native';
+import Logo from '../../components/Logo';
+import SignInButton from '../../components/SignInButton';
+import JoinRoomButton from '../../components/JoinRoomButton';
+import Button from '../../components/Button';
+import JoinGroupModal from '../../components/JoinGroupModal';
 
 const SignIn = () => {
   const [showBottomModal, setShowBottomModal] = useState(false);
@@ -21,26 +21,26 @@ const SignIn = () => {
       </View>
       {/* {showBottomModal && <JoinGroupModal closeModal={() => setShowBottomModal(false)}/>} */}
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   signIn:{
     flex: 1,
     padding:20,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
   },
   logo: {
     flex:1,
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   iconLogo: {
-    flex: 0.1
+    flex: 0.1,
   },
   text: {
-    textAlign: "center",
-  }
-})
+    textAlign: 'center',
+  },
+});
 
-export default SignIn
+export default SignIn;

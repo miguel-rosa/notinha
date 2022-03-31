@@ -1,12 +1,12 @@
-import React, { FC, useState, useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import useNoteOptions from "../../../../contexts/NoteOptionsContext";
-import useRoom from "../../../../contexts/RoomContext";
-import BottomModal from "../../../BottomModal";
-import Button from "../../../Button";
-import Checkbox from "../../../Checkbox";
-import IconTrash from "../../../Icons/IconTrash";
-import Text from "../../../Text";
+import React, { FC, useState, useEffect } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import useNoteOptions from '../../../../contexts/NoteOptionsContext';
+import useRoom from '../../../../contexts/RoomContext';
+import BottomModal from '../../../BottomModal';
+import Button from '../../../Button';
+import Checkbox from '../../../Checkbox';
+import IconTrash from '../../../Icons/IconTrash';
+import Text from '../../../Text';
 
 type NoteItemProps = {
   id: string;
@@ -15,43 +15,43 @@ type NoteItemProps = {
 }
 
 const NoteItem: FC<NoteItemProps> = ({ id, text, checked }) => {
-  const [isChecked, setIsChecked] = useState(checked)
-  
+  const [isChecked, setIsChecked] = useState(checked);
+
   const { handleNoteCheck } = useRoom();
   const {showOptions} = useNoteOptions();
 
   useEffect(() => {
     // handleNoteCheck(id, isChecked)
-  }, [isChecked])
+  }, [isChecked]);
 
 
   const handleNoteClick = () => {
-    setIsChecked((previousIsChecked) => !previousIsChecked)
-    console.log("checked", checked, isChecked)
-    handleNoteCheck(id, !isChecked)
-  }
+    setIsChecked((previousIsChecked) => !previousIsChecked);
+    console.log('checked', checked, isChecked);
+    handleNoteCheck(id, !isChecked);
+  };
 
   const handleNoteLongPress = () => {
-    showOptions(id)
-  }
+    showOptions(id);
+  };
 
   return (
-    <TouchableOpacity
+    <TouchableOpacity accessibilityRole="button"
       style={styles.noteItem}
       onPress={handleNoteClick}
       onLongPress={handleNoteLongPress}
     >
       <Checkbox checked={isChecked} onPress={handleNoteClick} />
-      <Text style={[styles.text, isChecked && { opacity: .7, textDecorationLine: 'line-through', textDecorationStyle: 'solid' }]}>{text}</Text>
+      <Text style={[styles.text, isChecked && { opacity: 0.7, textDecorationLine: 'line-through', textDecorationStyle: 'solid' }]}>{text}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   noteItem: {
-    backgroundColor: "white",
-    flexDirection: "row",
-    alignItems: "center",
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    alignItems: 'center',
     padding: 16,
     paddingVertical: 12,
     borderRadius: 8,
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
 
   },
   text: {
-    marginLeft: 10
-  }
-})
+    marginLeft: 10,
+  },
+});
 
 export default NoteItem;

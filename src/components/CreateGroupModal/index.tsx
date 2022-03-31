@@ -1,11 +1,11 @@
-import React, { FC, useState}from "react";
-import { Modal, StyleSheet, View } from "react-native";
-import useRoom from "../../contexts/RoomContext";
+import React, { FC, useState} from 'react';
+import { Modal, StyleSheet, View } from 'react-native';
+import useRoom from '../../contexts/RoomContext';
 
-import BottomModal from "../BottomModal";
-import Button from "../Button";
-import Input from "../Input";
-import Popup from "../Popup";
+import BottomModal from '../BottomModal';
+import Button from '../Button';
+import Input from '../Input';
+import Popup from '../Popup';
 
 type CreateGroupModalProps = {
   closeModal(arg:boolean): void;
@@ -13,14 +13,14 @@ type CreateGroupModalProps = {
 
 const CreateGroupModal:FC<CreateGroupModalProps> = ({closeModal}) => {
   const {createRoom} = useRoom();
-  const [groupName, setGroupName] = useState("");
-  const [code, setCode] = useState("");
+  const [groupName, setGroupName] = useState('');
+  const [code, setCode] = useState('');
 
   const handleCreateGroup = () => {
-    createRoom(code,groupName)
-    setGroupName("");
-    setCode("");
-  }
+    createRoom(code,groupName);
+    setGroupName('');
+    setCode('');
+  };
 
   return (
     <BottomModal closeModal={() => closeModal(false)} title="Criar grupo">
@@ -28,16 +28,16 @@ const CreateGroupModal:FC<CreateGroupModalProps> = ({closeModal}) => {
         <Input title="Código do grupo" onChangeText={(text:string) => setCode(text)} placeholder="Digite aqui o nome do grupo"/>
         <Button buttonStyle={styles.button} onPress={handleCreateGroup}>Criar grupo</Button>
     </BottomModal>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   input: {
-    marginVertical: 8
+    marginVertical: 8,
   },
   button: {
-    marginTop: 16
-  }
-})
+    marginTop: 16,
+  },
+});
 
 export default CreateGroupModal;

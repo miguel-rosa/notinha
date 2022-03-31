@@ -11,19 +11,19 @@ const Logo:FC<LogoProps> = ({style}) => {
     <View style={[styles.logo, style]}>
       <Text style={styles.logoText} weight="700">nótinha</Text>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   logo: {
     flex:1,
     alignSelf: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   logoText: {
     fontSize: 40,
-    color: "rgb(13, 102, 255)X"
-  }
-})
+    color: 'rgb(13, 102, 255)X',
+  },
+});
 
-export default Logo
+export default Logo;

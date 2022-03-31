@@ -1,14 +1,14 @@
-import React, { FC, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import{ v4 as uuid} from "uuid";
-import useRoom from "../../contexts/RoomContext";
+import React, { FC, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { v4 as uuid} from 'uuid';
+import useRoom from '../../contexts/RoomContext';
 
 
-import BottomModal from "../BottomModal";
-import Button from "../Button";
-import IconPlus from "../Icons/IconPlus";
-import IconTrash from "../Icons/IconTrash";
-import Input from "../Input";
+import BottomModal from '../BottomModal';
+import Button from '../Button';
+import IconPlus from '../Icons/IconPlus';
+import IconTrash from '../Icons/IconTrash';
+import Input from '../Input';
 
 type AddNoteButtonProps = {
 
@@ -17,29 +17,29 @@ type AddNoteButtonProps = {
 const AddNoteButton:FC<AddNoteButtonProps> = ({}) => {
   const [items, setItems] = useState([]);
   const {group:{slug}, addNotes} = useRoom();
-  const [text, setText] = useState("");
+  const [text, setText] = useState('');
   const [showModal, setShowModal] = useState(false);
 
   const handleAddNote = () => {
-    if(!text) return
+    if (!text) {return;}
     const id = uuid();
-    setItems(previousItems => [...previousItems, {id, text, checked: false}])
-    setText("")
-  }
+    setItems(previousItems => [...previousItems, {id, text, checked: false}]);
+    setText('');
+  };
 
   const handleRemoveNote = (index: number) => {
-    setItems((previousItems) => previousItems.filter((_, previousIndex) => index !== previousIndex ))
-  }
+    setItems((previousItems) => previousItems.filter((_, previousIndex) => index !== previousIndex ));
+  };
 
   const handleSaveNotes = async () => {
-    await addNotes(slug, items)
-    setShowModal(false)
+    await addNotes(slug, items);
+    setShowModal(false);
     setItems([]);
-  }
+  };
 
   return (
     <>
-    <TouchableOpacity style={styles.addNoteButton} onPress={() => setShowModal((previousShowModal => !previousShowModal))}>
+    <TouchableOpacity accessibilityRole="button" style={styles.addNoteButton} onPress={() => setShowModal((previousShowModal => !previousShowModal))}>
       <IconPlus size={35}/>
     </TouchableOpacity>
      {
@@ -49,8 +49,8 @@ const AddNoteButton:FC<AddNoteButtonProps> = ({}) => {
           closeModal={() => setShowModal(false)}
           buttonOptions={{
             show: true,
-            text: "Salvar itens",
-            size:"small",
+            text: 'Salvar itens',
+            size:'small',
           }}
           onPress={handleSaveNotes}
         >
@@ -74,7 +74,7 @@ const AddNoteButton:FC<AddNoteButtonProps> = ({}) => {
               style={styles.input}
             />
             <Button
-              size="small" 
+              size="small"
               useSpacing={false}
               onPress={handleAddNote}
             >+</Button>
@@ -84,32 +84,32 @@ const AddNoteButton:FC<AddNoteButtonProps> = ({}) => {
       )
     }
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   addNoteButton: {
-    position: "absolute",
+    position: 'absolute',
     width: 50,
     height: 50,
     bottom: 16,
     borderRadius:50,
     right: 16,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0d66ff"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0d66ff',
   },
   item: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom:8
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom:8,
   },
   form: {
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   input: {
-    flex: 1
-  }
-})
+    flex: 1,
+  },
+});
 
-export default AddNoteButton
+export default AddNoteButton;

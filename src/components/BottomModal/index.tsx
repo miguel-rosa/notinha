@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import {View, StyleSheet} from 'react-native'
+import {View, StyleSheet} from 'react-native';
 import Button from '../Button';
-import Text from "../Text";
+import Text from '../Text';
 import IconClose from '../Icons/IconClose';
 
 type BottomModalProps = {
@@ -21,22 +21,22 @@ type BottomModalProps = {
 const BottomModal:FC<BottomModalProps> = ({
   title,
   children,
-  buttonOptions={
+  buttonOptions = {
     position:'stretch',
     show: false,
-    size: "medium"
+    size: 'medium',
   },
   closeModal,
   height,
-  onPress
+  onPress,
 }) => {
   const buttonPosition = {
-    "stretch":"stretch",
-    "center":"center",
-    'left':"flex-start",
-    'right':"flex-end"
-  }
-  return(
+    'stretch':'stretch',
+    'center':'center',
+    'left':'flex-start',
+    'right':'flex-end',
+  };
+  return (
     <View style={[styles.bottomModal, {height:height}]} >
       <View style={styles.header}>
         <Text  style={styles.title}>{title}</Text>
@@ -46,8 +46,8 @@ const BottomModal:FC<BottomModalProps> = ({
         {children}
         {buttonOptions.show && (
           <View style={{
-            alignItems: buttonPosition[buttonOptions.position || "stretch"],
-            paddingTop: 18
+            alignItems: buttonPosition[buttonOptions.position || 'stretch'],
+            paddingTop: 18,
           }}>
             <Button
               useSpacing={false}
@@ -61,8 +61,8 @@ const BottomModal:FC<BottomModalProps> = ({
         )}
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   bottomModal: {
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     left:0,
     right:0,
-    bottom:0
+    bottom:0,
     // ,   borderTopStartRadius: 9
   },
   header: {
@@ -87,17 +87,17 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 16
+    fontSize: 16,
   },
   close: {
     position: 'absolute',
     right: 16,
     alignSelf: 'center',
-    top: 13
+    top: 13,
   },
   content: {
-    padding: 20
-  }
-})
+    padding: 20,
+  },
+});
 
 export default BottomModal;

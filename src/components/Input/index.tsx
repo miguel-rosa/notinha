@@ -1,6 +1,6 @@
-import React, { FC } from "react";
-import { TextInput, StyleSheet, TextStyle } from "react-native";
-import Text from "../Text";
+import React, { FC } from 'react';
+import { TextInput, StyleSheet, TextStyle } from 'react-native';
+import Text from '../Text';
 
 type InputProps = {
   title?: string;
@@ -17,14 +17,14 @@ const Input:FC<InputProps> = ({
   placeholder,
   onChangeText,
   style,
-  autoFocus=false,
-  withoutBorder=false,
-  value
+  autoFocus = false,
+  withoutBorder = false,
+  value,
 }) => {
   return (
     <>
     {!!title && <Text style={styles.title}>{title}</Text>}
-    <TextInput
+    <TextInput accessibilityLabel="Text input field"
       onChangeText={onChangeText}
       autoFocus={autoFocus}
       value={value}
@@ -32,23 +32,23 @@ const Input:FC<InputProps> = ({
       style={[
         style,
         styles.textInput,
-        {borderWidth: withoutBorder ? 0 : 1}
+        {borderWidth: withoutBorder ? 0 : 1},
       ]}/>
     </>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   title: {
-  
+
   },
   textInput: {
-    fontFamily: "Poppins_500Medium",
+    fontFamily: 'Poppins_500Medium',
     borderColor:'#c1c9d4',
     paddingVertical: 8,
     paddingHorizontal: 16,
-    borderRadius: 6
-  }
-})
+    borderRadius: 6,
+  },
+});
 
-export default Input
+export default Input;

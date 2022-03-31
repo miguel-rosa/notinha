@@ -1,14 +1,14 @@
-import React, { FC, useState } from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import{ v4 as uuid} from "uuid";
-import useRoom from "../../contexts/RoomContext";
+import React, { FC, useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { v4 as uuid} from 'uuid';
+import useRoom from '../../contexts/RoomContext';
 
 
-import BottomModal from "../BottomModal";
-import Button from "../Button";
-import IconPlus from "../Icons/IconPlus";
-import IconTrash from "../Icons/IconTrash";
-import Input from "../Input";
+import BottomModal from '../BottomModal';
+import Button from '../Button';
+import IconPlus from '../Icons/IconPlus';
+import IconTrash from '../Icons/IconTrash';
+import Input from '../Input';
 
 type AddNoteButtonProps = {
 
@@ -16,18 +16,18 @@ type AddNoteButtonProps = {
 
 const AddNoteForm:FC<AddNoteButtonProps> = ({}) => {
   const {addNote} = useRoom();
-  const [text, setText] = useState("");
-  
+  const [text, setText] = useState('');
+
   const onAddNoteButtonPress = async () => {
-    if(!text) return
+    if (!text) {return;}
     const id = uuid();
     await addNote({
       id,
       text,
-      checked: false
-    })
-    setText("");
-  }
+      checked: false,
+    });
+    setText('');
+  };
 
   return (
     <View style={styles.addNoteForm}>
@@ -39,43 +39,43 @@ const AddNoteForm:FC<AddNoteButtonProps> = ({}) => {
         onChangeText={(inputText) => setText(inputText)}
         style={styles.input}
       />
-    <TouchableOpacity
+    <TouchableOpacity accessibilityRole="button"
       style={styles.addNoteButton}
       onPress={onAddNoteButtonPress}
     >
       <IconPlus size={35}/>
     </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   addNoteForm: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 16,
     right: 16,
     left: 16,
-    flexDirection: "row"
+    flexDirection: 'row',
   },
   addNoteButton: {
-    
+
     width: 50,
     height: 50,
     borderRadius:50,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0d66ff"
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#0d66ff',
   },
   form: {
-    
+
   },
   input: {
-    backgroundColor:"white",
-    alignSelf: "stretch",
+    backgroundColor:'white',
+    alignSelf: 'stretch',
     flex: 1,
     marginRight:10,
-    borderRadius:90
-  }
-})
+    borderRadius:90,
+  },
+});
 
-export default AddNoteForm
+export default AddNoteForm;

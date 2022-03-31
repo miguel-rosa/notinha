@@ -13,77 +13,77 @@ type ButtonProps = {
 const Button:FC<ButtonProps> = ({
   children,
   onPress = () => {},
-  type='primary',
-  size='medium',
-  useSpacing=true,
-  buttonStyle
+  type = 'primary',
+  size = 'medium',
+  useSpacing = true,
+  buttonStyle,
 }) => {
   return (
-    <TouchableOpacity onPress={onPress} 
+    <TouchableOpacity accessibilityRole="button" onPress={onPress}
       style={[
         styles[`${type}Background`],
         styles[`${size}Button`],
         styles.button,
         {
-          marginVertical: useSpacing ? 6 : 0
+          marginVertical: useSpacing ? 6 : 0,
         },
-        buttonStyle
+        buttonStyle,
         ]}>
       <Text
         style={[styles[`${type}Text`], styles[`${size}Text`], styles.text]}
         >{children}</Text>
     </TouchableOpacity>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   button: {
     alignItems: 'center',
-    borderRadius: 8
+    borderRadius: 8,
   },
   text: {
 
   },
 
   primaryBackground: {
-    backgroundColor:'#0d66ff'
+    backgroundColor:'#0d66ff',
   },
   secondaryBackground: {
-    backgroundColor:'transparent'
+    backgroundColor:'transparent',
   },
   dangerBackground: {
-    backgroundColor: "rgb(255,88,88)"
+    backgroundColor: 'rgb(255,88,88)',
   },
   bigButton: {
     paddingHorizontal: 20,
-    paddingVertical: 16
+    paddingVertical: 16,
   },
   mediumButton: {
     paddingHorizontal: 16,
-    paddingVertical: 12
+    paddingVertical: 12,
   },
   smallButton: {
     paddingHorizontal: 12,
-    paddingVertical: 8
+    paddingVertical: 8,
   },
   bigText: {
-    fontSize: 18
+    fontSize: 18,
   },
   mediumText: {
-    fontSize: 16
+    fontSize: 16,
   },
   smallText: {
-    fontSize: 14
+    fontSize: 14,
   },
   primaryText: {
-    color: '#fff'
+    color: '#fff',
   },
   secondaryText: {
-    color: '#040404'
+    color: '#040404',
   },
   dangerText: {
-    color: "#fff"
-  }
-})
+    color: '#fff',
+  },
+});
 
 export default Button;
