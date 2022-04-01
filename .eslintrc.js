@@ -28,6 +28,8 @@ module.exports = {
       rules: {
         'no-undef': 0,
         'indent': ['error', 2],
+        'react-hooks/rules-of-hooks': 'error',
+        'react-hooks/exhaustive-deps': 'warn',
       },
     },
   ],

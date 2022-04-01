@@ -1,12 +1,14 @@
 import React, { FC } from 'react';
 import { FlatList, StyleSheet, View} from 'react-native';
+import useRoom from '../../contexts/RoomContext';
 import GroupItem from './components/GroupItem';
 
 type GroupsList = {
-  groups: any
+  // groups: any
 }
 
-const GroupsList:FC<GroupsList> = ({groups}) => {
+const GroupsList:FC<GroupsList> = ({}) => {
+  const { userSavedRooms: groups} = useRoom();
 
   const renderItem = ({item}) => (
     <GroupItem {...item}/>
@@ -17,7 +19,7 @@ const GroupsList:FC<GroupsList> = ({groups}) => {
       <FlatList
         data={groups}
         renderItem={renderItem}
-        keyExtractor={groups => groups.slug}
+        keyExtractor={group => group.slug}
         numColumns={1}
       />
     </View>

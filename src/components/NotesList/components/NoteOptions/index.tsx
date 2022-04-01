@@ -8,19 +8,19 @@ const NoteOptions = () => {
   const {isNoteOptionsVisible, hideOptions, noteId} = useNoteOptions();
   const { deleteNote } = useRoom();
 
-  const handleButtonClick = () => {
-     deleteNote(noteId);
+  const onDeleteNoteButtonPress = () => {
+    deleteNote(noteId);
     hideOptions();
   };
 
   return isNoteOptionsVisible ? (
-     (
-        <BottomModal title="Opções" closeModal={hideOptions}>
-          <Button type="danger" onPress={handleButtonClick}>
+    (
+      <BottomModal title="Opções" closeModal={hideOptions}>
+        <Button type="danger" onPress={onDeleteNoteButtonPress}>
             Deletar nota
-          </Button>
-        </BottomModal>
-      )
+        </Button>
+      </BottomModal>
+    )
   ) : null;
 };
 

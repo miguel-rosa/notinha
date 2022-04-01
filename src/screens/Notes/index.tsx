@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { View, FlatList, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import AddNoteForm from '../../components/AddNoteForm';
 import NotesList from '../../components/NotesList';
@@ -28,6 +28,7 @@ const UserButton = ({navigation}) => {
 const Notes = ({navigation}) => {
 
   const {getNotes, notes, group:{slug, name, isFavorited}, handleFavoriteClick} = useRoom();
+  const scrollViewRef = useRef();
 
   useEffect(() => {
     getNotes(slug);
@@ -47,7 +48,12 @@ const Notes = ({navigation}) => {
 
   return (
     <NoteOptionsStorage>
-      <ScrollView style={styles.notes}>
+      <ScrollView style={styles.notes}
+        ref={scrollViewRef}
+        onContentSizeChange={() => {
+          scrollViewRef.current.scrollToEnd({ animated: true });
+        }}
+      >
         <View style={styles.header}>
           <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onBackButtonPress}>Voltar</Button>
           <IconFavorite fill={isFavorited} onPress={onIconFavoritePress}/>

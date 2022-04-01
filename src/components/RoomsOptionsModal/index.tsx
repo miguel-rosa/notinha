@@ -7,20 +7,24 @@ import JoinGroupModal from '../JoinGroupModal';
 
 type RoomOptionsModalProps = {
   closeModal(arg:boolean): void;
+  showModal: boolean;
 }
 
-const RoomOptionsModal:FC<RoomOptionsModalProps> = ({closeModal}) => {
+const RoomOptionsModal:FC<RoomOptionsModalProps> = ({showModal, closeModal}) => {
+
   const [showBottomModal, setShowBottomModal] = useState(false);
   const [showCreateRoomModal, setShowCreateRoomModal] = useState(false);
 
-  return (
-    <BottomModal closeModal={() => closeModal(false)} title="Opções de grupo">
-      <Button onPress={() => setShowCreateRoomModal(true)}>Criar grupo</Button>
-      {showCreateRoomModal && <CreateGroupModal closeModal={() => setShowCreateRoomModal(false)}/>}
-      <Button type="secondary" onPress={() => setShowBottomModal(true)}>Entrar em um grupo</Button>
+  return showModal ? (
+    <>
+      <BottomModal closeModal={() => closeModal(false)} title="Opções de grupo">
+        <Button onPress={() => setShowCreateRoomModal(true)}>Criar grupo</Button>
+        <Button type="secondary" onPress={() => setShowBottomModal(true)}>Entrar em um grupo</Button>
+      </BottomModal>
       {showBottomModal && <JoinGroupModal closeModal={() => setShowBottomModal(false)}/>}
-    </BottomModal>
-  );
+      {showCreateRoomModal && <CreateGroupModal closeModal={() => setShowCreateRoomModal(false)}/>}
+    </>
+  ) : null;
 };
 
 export default RoomOptionsModal;

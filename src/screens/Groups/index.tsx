@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState} from 'react';
+import React, { FC, useCallback, useEffect, useMemo, useState} from 'react';
 import { StyleSheet, ScrollView, View} from 'react-native';
 import Button from '../../components/Button';
 import GroupsList from '../../components/GroupsList';
@@ -7,8 +7,9 @@ import Text from '../../components/Text';
 import useRoom from '../../contexts/RoomContext';
 
 const Groups:FC = ({navigation}) => {
+
   const [showBottomModal, setShowBottomModal] = useState(false);
-  const {getUserFavoriteRooms, userSavedRooms, isFavorited } = useRoom();
+  const {getUserFavoriteRooms, isFavorited } = useRoom();
 
   const onGoToHomeButtonPress = () => {
     setShowBottomModal(true);
@@ -16,20 +17,19 @@ const Groups:FC = ({navigation}) => {
 
   useEffect(() => {
     getUserFavoriteRooms();
-    console.log('calleddddddddddd');
-  }, [isFavorited]);
+  }, [isFavorited, getUserFavoriteRooms]);
 
   return (
-    <View style={styles.groups}>
-      <View style={styles.header}>
-        <Text fontSize={28} weight="700">Grupos</Text>
-        <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onGoToHomeButtonPress}>Opções de grupos</Button>
-      </View>
-      <ScrollView>
-        <GroupsList groups={userSavedRooms}/>
+    <>
+      <ScrollView style={styles.groups}>
+        <View style={styles.header}>
+          <Text fontSize={28} weight="700">Grupos</Text>
+          <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onGoToHomeButtonPress}>Opções de grupos</Button>
+        </View>
+        <GroupsList/>
       </ScrollView>
-      {showBottomModal && <RoomOptionsModal closeModal={() => setShowBottomModal(false)}/>}
-    </View>
+      <RoomOptionsModal showModal={showBottomModal} closeModal={() => setShowBottomModal(false)}/>
+    </>
   );
 };
 

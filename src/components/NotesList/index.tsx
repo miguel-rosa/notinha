@@ -17,7 +17,7 @@ const NotesList:FC<NotesList> = ({notes}) => {
       <FlatList
         data={notes}
         renderItem={renderItem}
-        keyExtractor={notes => notes.id}
+        keyExtractor={note => note.id}
       />
     </View>
   );

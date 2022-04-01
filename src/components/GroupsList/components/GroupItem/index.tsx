@@ -1,6 +1,7 @@
-import React, { FC, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect, useMemo, useCallback } from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import useRoom from '../../../../contexts/RoomContext';
+import { Note } from '../../../../types/note';
 import BottomModal from '../../../BottomModal';
 import Button from '../../../Button';
 import Checkbox from '../../../Checkbox';
@@ -9,9 +10,9 @@ import Text from '../../../Text';
 import NoteItem from './components/NoteItem';
 
 type GroupItemProps = {
-  id: string;
-  text: string;
-  checked: boolean;
+  slug: string;
+  name: string;
+  notes: Note[];
 }
 
 
@@ -20,9 +21,9 @@ const GroupItem: FC<GroupItemProps> = ({ slug, name, notes }) => {
 
   const { getRoom } = useRoom();
 
-  const onGroupPress = () => {
+  const onGroupPress = useCallback(() => {
     getRoom(slug);
-  };
+  }, [slug, getRoom]);
 
   const renderItem = ({item}) => (
     <NoteItem {...item}/>
@@ -38,7 +39,7 @@ const GroupItem: FC<GroupItemProps> = ({ slug, name, notes }) => {
       <FlatList
         data={notes}
         renderItem={renderItem}
-        keyExtractor={notes => notes.id}
+        keyExtractor={note => note.id}
       />
     </TouchableOpacity>
   );
