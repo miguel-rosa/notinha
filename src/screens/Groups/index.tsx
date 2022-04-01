@@ -4,6 +4,7 @@ import Button from '../../components/Button';
 import GroupsList from '../../components/GroupsList';
 import RoomOptionsModal from '../../components/RoomsOptionsModal';
 import Text from '../../components/Text';
+import UserButton from '../../components/UserButton';
 import useRoom from '../../contexts/RoomContext';
 
 const Groups:FC = ({navigation}) => {
@@ -24,7 +25,11 @@ const Groups:FC = ({navigation}) => {
       <ScrollView style={styles.groups}>
         <View style={styles.header}>
           <Text fontSize={28} weight="700">Grupos</Text>
-          <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onGoToHomeButtonPress}>Opções de grupos</Button>
+          <View style={styles.headerOptions}>
+            <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onGoToHomeButtonPress}>Opções de grupos</Button>
+            <UserButton navigation={navigation}/>
+          </View>
+
         </View>
         <GroupsList/>
       </ScrollView>
@@ -43,9 +48,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  headerOptions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   button: {
     paddingHorizontal: 0,
     paddingVertical:0,
+    marginRight: 10,
   },
 });
 

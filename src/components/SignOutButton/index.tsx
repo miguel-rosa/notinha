@@ -19,10 +19,7 @@ const SignOutButton = () => {
 
 const styles = StyleSheet.create({
   button: {
-  position: 'absolute',
-  bottom: 20,
-  left:20,
-  right:20,
+
   },
 });
 
