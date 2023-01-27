@@ -39,12 +39,12 @@ const AddNoteForm:FC<AddNoteButtonProps> = ({}) => {
         onChangeText={(inputText) => setText(inputText)}
         style={styles.input}
       />
-    <TouchableOpacity accessibilityRole="button"
-      style={styles.addNoteButton}
-      onPress={onAddNoteButtonPress}
-    >
-      <IconPlus size={35}/>
-    </TouchableOpacity>
+      <TouchableOpacity accessibilityRole="button"
+        style={styles.addNoteButton}
+        onPress={onAddNoteButtonPress}
+      >
+        <IconPlus size={35}/>
+      </TouchableOpacity>
     </View>
   );
 };

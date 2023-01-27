@@ -178,8 +178,14 @@ export const RoomStorage:FC = ({children}) => {
   const addNote = async (note:Note) => {
     try {
       const roomRef = doc(db, 'room', slug);
+      const isTitle = note.text.charAt(0) === '/';
+
       await updateDoc(roomRef, {
-        notes: arrayUnion(note),
+        notes: arrayUnion({
+          ...note,
+          isTitle:isTitle,
+          text: isTitle ? note.text.substring(1) : note.text,
+        }),
       });
     } catch (e) {
       console.error('Error adding document: ', e);
@@ -283,6 +289,7 @@ export const RoomStorage:FC = ({children}) => {
         userSavedRooms,
         handleFavoriteClick,
         getUserFavoriteRooms,
+
       }}
     >
       {children}

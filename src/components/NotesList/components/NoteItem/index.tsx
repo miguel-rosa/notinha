@@ -9,9 +9,10 @@ type NoteItemProps = {
   id: string;
   text: string;
   checked: boolean;
+  isTitle: boolean;
 }
 
-const NoteItem: FC<NoteItemProps> = ({ id, text, checked }) => {
+const NoteItem: FC<NoteItemProps> = ({ id, text, checked, isTitle }) => {
   const [isChecked, setIsChecked] = useState(checked);
 
   const { handleNoteCheck } = useRoom();
@@ -29,12 +30,14 @@ const NoteItem: FC<NoteItemProps> = ({ id, text, checked }) => {
 
   return (
     <TouchableOpacity accessibilityRole="button"
-      style={styles.noteItem}
-      onPress={handleNoteClick}
+      style={isTitle ? styles.noteTitle : styles.noteItem}
+      onPress={isTitle ? () => null : handleNoteClick }
       onLongPress={handleNoteLongPress}
     >
-      <Checkbox checked={isChecked} onPress={handleNoteClick} />
-      <Text style={[styles.text, isChecked && { opacity: 0.7, textDecorationLine: 'line-through', textDecorationStyle: 'solid' }]}>{text}</Text>
+      {
+        !isTitle && <Checkbox checked={isChecked} onPress={handleNoteClick} />
+      }
+      <Text style={isTitle ? styles.title : [styles.text, isChecked && { opacity: 0.7, textDecorationLine: 'line-through', textDecorationStyle: 'solid' }]}>{text}</Text>
     </TouchableOpacity>
   );
 };
@@ -48,6 +51,13 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 8,
+  },
+  noteTitle: {
+    padding: 12,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: '700',
   },
   text: {
     marginLeft: 10,

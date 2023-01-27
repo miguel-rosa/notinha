@@ -9,6 +9,7 @@ import Button from '../../components/Button';
 import { NoteOptionsStorage } from '../../contexts/NoteOptionsContext';
 import NoteOptions from '../../components/NotesList/components/NoteOptions';
 import IconFavorite from '../../components/Icons/IconFavorite';
+import IconCopy from '../../components/Icons/IconCopy';
 
 const Notes = ({navigation}) => {
 
@@ -27,10 +28,19 @@ const Notes = ({navigation}) => {
     handleFavoriteClick(!isFavorited);
   };
 
+  const onCopyPress = () => {
+    navigator.clipboard.writeText(notes.filter(({checked, isTitle}) => isTitle || checked).map(({text, isTitle}) => {
+      return (
+        isTitle ? `\n*${text}*\n` : `• ${text}\n`
+      );
+    } ).join(''));
+  };
+
   const onBackButtonPress = () => {
     navigation.navigate('Groups');
   };
 
+  console.log('notes', notes);
   return (
     <NoteOptionsStorage>
       <ScrollView style={styles.notes}
@@ -40,10 +50,15 @@ const Notes = ({navigation}) => {
         }}
       >
         <View style={styles.header}>
+
           <Button buttonStyle={styles.button} size="small" type="secondary" onPress={onBackButtonPress}>Voltar</Button>
-          <IconFavorite fill={isFavorited} onPress={onIconFavoritePress}/>
+          <View style={styles.headerOptions}>
+            <IconCopy onPress={onCopyPress}/>
+            <IconFavorite fill={isFavorited} onPress={onIconFavoritePress}/>
+          </View>
         </View>
         <Text fontSize={28} weight="700">{name}</Text>
+        <Text style={styles.subTitle} >{slug}</Text>
         <NotesList notes={notes} />
       </ScrollView>
       <AddNoteForm/>
@@ -64,9 +79,21 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  headerOptions: {
+    flexDirection: 'row',
+    gap: 10,
+  },
   button: {
     paddingHorizontal: 0,
     paddingVertical:0,
+  },
+  subTitle: {
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    fontSize: 14,
+    borderRadius:4,
+    backgroundColor:'rgb(230,230,230)',
+    alignSelf: 'flex-start',
   },
 });
 
